@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="gerenciador_de_eventos" transaction-type="RESOURCE_LOCAL">
-      <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
@@ -11,8 +11,11 @@
       <property name="hibernate.connection.autoReconnect" value="true"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>     
-      
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="javax.persistence.jdbc.url" value=""/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.driver" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
       
     </properties>
   </persistence-unit>

@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
  *
  * @author PabloHenrique
  */
-  //fdfdfdfdfd
+  
 public class EntityManagerUtil {
 private static EntityManagerFactory emf;
          public static EntityManager getEntityManager() {
