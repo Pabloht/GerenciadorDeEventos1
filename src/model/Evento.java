@@ -34,6 +34,26 @@ public class Evento {
     private Date dataInicio;
     @Column(name = "dataFimEvento")
     private Date dataFim;
+
+    public Evento(int id, String nome, String local, Date dataInicio, Date dataFim, String conteudoEmail) {
+        this.id = id;
+        this.local = local;
+        this.nome = nome;
+        this.conteudoEmail = conteudoEmail;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
+
+    public Evento(String nome, String local, Date dataInicio, Date dataFim, String conteudoEmail) {
+        
+        this.local = local;
+        this.nome = nome;
+        this.conteudoEmail = conteudoEmail;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
+    
+
     
     
 

@@ -13,11 +13,12 @@ public class EventoService {
     
     // Para incluir um evento precisa somente disto ou mais coisas??
     
-    public boolean incluirEvento(String nome, String local, Date dataInicio, Date dataFim) {
+    public boolean incluirEvento(String nome, String local, Date dataInicio, Date dataFim, String conteudoEmail) {
         boolean retorno = false;
-        //Evento evento = new Evento(dataInicio, dataFim, local, nome);
+       
+        Evento evento = new Evento(nome, local, dataInicio, dataFim, conteudoEmail);
         try {
-//            eventoDAO.incluirEvento(evento);
+            eventoDAO.incluirEvento(evento);
             retorno = true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
@@ -26,11 +27,11 @@ public class EventoService {
         return retorno;
     }
 
-    public boolean alterarEvento(Integer id, String nome, String local, Date dataInicio, Date dataFim) {
+    public boolean alterarEvento(int id, String nome, String local, Date dataInicio, Date dataFim, String conteudoEmail) {
         boolean retorno = false;
-        //Evento evento = new Evento(id, dataInicio, dataFim, local, nome);
+        Evento evento = new Evento(id, nome, local, dataInicio, dataFim, conteudoEmail);
         try {
-//            eventoDAO.alterarEvento(evento);
+            eventoDAO.alterarEvento(evento);
             retorno = true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,

@@ -5,12 +5,15 @@
  */
 package views;
 
+import service.EventoService;
+
 /**
  *
  * @author PabloHenrique
  */
 public class CadastrarEvento extends javax.swing.JFrame {
-
+    
+    private EventoService eventoService = new EventoService();
     /**
      * Creates new form CadastrarEvento
      */
@@ -62,6 +65,11 @@ public class CadastrarEvento extends javax.swing.JFrame {
         jScrollPane1.setViewportView(campoConteudoEmail);
 
         botaoCadastrar.setText("Cadastrar Evento");
+        botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastrarActionPerformed(evt);
+            }
+        });
 
         botaoLimpar.setText("Limpar Campos");
 
@@ -140,6 +148,10 @@ public class CadastrarEvento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+       // eventoService.incluirEvento(campoNome.getText(), campoLocal.getText(), null, null, null)
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
