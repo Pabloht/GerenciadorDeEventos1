@@ -46,16 +46,16 @@ public class Sessao {
     @Column(name = "numeroMaximoSessao")
     private int numeroMaximo;
     @Column(name = "ministranteSessao")
-    private List<Ministrante> ministrante;
-    @ManyToOne
-    @JoinColumn(name="tipoSessao_idSessao")
+    private List<Ministrante> ministrantes;
+   // @ManyToOne
+   //@JoinColumn(name="tipoSessao_idSessao")
     private TipoSessao tipoSessao;
     @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable(name="sessao_inscrito", 
     joinColumns=@JoinColumn(name="idInscrito"),
     inverseJoinColumns=@JoinColumn(name="idSessao"))
     @Column(name = "inscritoSessao")
-    private List<Inscrito> inscrito;
+    private List<Inscrito> inscritos;
     /**
      * @return the data
      */
@@ -126,18 +126,15 @@ public class Sessao {
         this.id = id;
     }
 
-    /**
-     * @return the inscrito
-     */
-    public List<Inscrito> getInscrito() {
-        return inscrito;
+    public List<Inscrito> getInscritos() {
+        return inscritos;
     }
 
     /**
-     * @param inscrito the inscrito to set
+     * @return the inscrito
      */
-    public void setInscrito(List<Inscrito> inscrito) {
-        this.inscrito = inscrito;
+    public void setInscritos(List<Inscrito> inscritos) {
+        this.inscritos = inscritos;
     }
 
     /**
@@ -186,14 +183,14 @@ public class Sessao {
      * @return the ministrante
      */
     public List<Ministrante> getMinistrante() {
-        return ministrante;
+        return ministrantes;
     }
 
     /**
      * @param ministrante the ministrante to set
      */
     public void setMinistrante(List<Ministrante> ministrante) {
-        this.ministrante = ministrante;
+        this.ministrantes = ministrante;
     }
 
     /**

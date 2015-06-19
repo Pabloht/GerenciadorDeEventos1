@@ -15,11 +15,11 @@ import javax.persistence.Table;
  *
  * @author PabloHenrique
  */
-@Entity
-@Table(name = "TipoSessao")
+//@Entity
+//@Table(name = "TipoSessao")
 public enum TipoSessao {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
             
     MINICURSO("Mini Curso"), PALESTRA("Palestra");
     
