@@ -36,9 +36,9 @@ public class Ministrante {
     @Column(name = "telefoneMinistrante")
     private String telefone;
     @ManyToMany(mappedBy = "ministrantes", cascade = CascadeType.ALL)
-    //@Column(name = "sessao")
+    @Column(name = "sessao")
     private List<Sessao> sessao;
-
+    
     /**0
      * @return the id
      */

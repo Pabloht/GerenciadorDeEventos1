@@ -32,8 +32,8 @@ public class Sessao {
     private int id;
     @Column(name = "dataSessao")
     private Date data;
-    @Column(name = "eventoSessao")
-    private Evento evento;
+    
+    
     @Column(name = "horaFimSessao")
     private Date horaFim;
     @Column(name = "horaInicioSessao")
@@ -45,10 +45,21 @@ public class Sessao {
     private String nome;
     @Column(name = "numeroMaximoSessao")
     private int numeroMaximo;
-    @Column(name = "ministranteSessao")
-    private List<Ministrante> ministrantes;
-   // @ManyToOne
-   //@JoinColumn(name="tipoSessao_idSessao")
+    
+    
+    
+    @ManyToMany (cascade = CascadeType.ALL)
+    @JoinTable(name="sessao_ministrante", 
+      joinColumns=@JoinColumn(name="idsessao"),
+      inverseJoinColumns=@JoinColumn(name="idministrante"))
+       private List<Ministrante> ministrantes;
+    
+    @ManyToOne
+    @JoinColumn(name = "evento_Sessao")
+    private Evento evento;
+    
+    @ManyToOne
+    @JoinColumn(name="tipoSessao_idSessao")
     private TipoSessao tipoSessao;
     @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable(name="sessao_inscrito", 
