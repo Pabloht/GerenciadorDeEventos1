@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/Sessao.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/TelaEventos.java</file>
             <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/Evento.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/TipoSessao.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/Ministrante.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/Service/EventoService.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/InformaçãoEvento.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/DAO/EventoDAO.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/CadastrarEvento.java</file>
         </group>
     </open-files>
 </project-private>

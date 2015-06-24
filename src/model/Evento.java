@@ -39,6 +39,11 @@ public class Evento {
     
     @OneToMany (mappedBy="evento" , targetEntity=Sessao.class)
     private List<Sessao> sessao;
+
+    public Evento() {
+    }
+    
+    
     
     public Evento(int id, String nome, String local, Date dataInicio, Date dataFim, String conteudoEmail) {
         this.id = id;

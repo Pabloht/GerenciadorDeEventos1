@@ -20,6 +20,7 @@ public class EventoService {
         try {
             eventoDAO.incluirEvento(evento);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Evento " + nome + " cadastrado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na inclusão do evento... " + e);
@@ -42,7 +43,8 @@ public class EventoService {
 
     public void apagarEvento(int id) {
         try {
-            eventoDAO.apagarEvento(retornarEvento(id));
+            String retorno = eventoDAO.apagarEvento(retornarEvento(id));
+            JOptionPane.showMessageDialog(null, retorno);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro ao apagar o evento... " + e);
@@ -52,7 +54,7 @@ public class EventoService {
     public Evento retornarEvento(int id) {
         Evento evento = null;
         try {
-            eventoDAO.retornarEvento(id);
+          evento = eventoDAO.retornarEvento(id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro no retorno do evento... " + e);

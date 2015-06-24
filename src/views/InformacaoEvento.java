@@ -5,17 +5,53 @@
  */
 package views;
 
+import javax.swing.JOptionPane;
+import model.Evento;
+import service.EventoService;
+
 /**
  *
  * @author PabloHenrique
  */
-public class InformaçãoEvento extends javax.swing.JFrame {
+public class InformacaoEvento extends javax.swing.JFrame {
 
     /**
      * Creates new form InformaçãoEvento
      */
-    public InformaçãoEvento() {
+    public InformacaoEvento(Evento evento) {
         initComponents();
+        id = evento.getId();
+        campoNome.setText(evento.getNome());
+        campoLocal.setText(evento.getLocal());
+        campoDataInicio.setDate(evento.getDataInicio());
+        campoDataFim.setDate(evento.getDataFim());
+        campoConteudoEmail.setText(evento.getConteudoEmail());
+        DesabilitarCampos();
+    }
+
+    private InformacaoEvento() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    int id = 0;
+    
+    private void DesabilitarCampos(){
+        campoNome.setEditable(false);
+        campoLocal.setEditable(false);
+        campoDataInicio.setEnabled(false);
+        campoDataFim.setEnabled(false);
+        campoConteudoEmail.setEditable(false);
+                
+    }
+    
+    private boolean HabilitarCampos() {
+        habilitado = true;
+        campoNome.setEditable(true);
+        campoLocal.setEditable(true);
+        campoDataInicio.setEnabled(true);
+        campoDataFim.setEnabled(true);
+        campoConteudoEmail.setEditable(true);
+        return habilitado;
     }
 
     /**
@@ -28,8 +64,6 @@ public class InformaçãoEvento extends javax.swing.JFrame {
     private void initComponents() {
 
         txtDtFim = new javax.swing.JLabel();
-        campoDtInicio = new javax.swing.JTextField();
-        campoDtFim = new javax.swing.JTextField();
         txtConteudoEmail = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoConteudoEmail = new javax.swing.JTextArea();
@@ -42,7 +76,7 @@ public class InformaçãoEvento extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botaoVoltar = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -93,6 +127,8 @@ public class InformaçãoEvento extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         jTextField13 = new javax.swing.JTextField();
+        campoDataInicio = new com.toedter.calendar.JDateChooser();
+        campoDataFim = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,15 +147,30 @@ public class InformaçãoEvento extends javax.swing.JFrame {
         txtDtInicio.setText("Data de Inicio:");
 
         jButton2.setText("Alterar Evento");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Apagar Evento");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel2.setText("Informações do Evento");
 
-        jButton1.setText("Voltar");
+        botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Número Máximo de Inscritos:");
 
@@ -185,7 +236,7 @@ public class InformaçãoEvento extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 472, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -520,17 +571,21 @@ public class InformaçãoEvento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(jLabel2)
-                        .addGap(110, 110, 110))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addGap(18, 18, 18)))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(campoDataFim, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(campoDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2))
+                        .addGap(110, 110, 110)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane2))
@@ -551,15 +606,12 @@ public class InformaçãoEvento extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDtInicio)
                                     .addComponent(txtDtFim))
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoDtInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                                    .addComponent(campoDtFim))))
+                                .addGap(304, 304, 304)))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(txtConteudoEmail)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)))
-                    .addContainerGap(517, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
+                    .addContainerGap(518, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,11 +619,15 @@ public class InformaçãoEvento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
+                .addGap(115, 115, 115)
+                .addComponent(campoDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(campoDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton1))
+                    .addComponent(botaoVoltar))
                 .addContainerGap())
             .addComponent(jTabbedPane2)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,18 +641,14 @@ public class InformaçãoEvento extends javax.swing.JFrame {
                         .addComponent(txtLocal)
                         .addComponent(campoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDtInicio)
-                        .addComponent(campoDtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDtInicio)
                     .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDtFim)
-                        .addComponent(campoDtFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDtFim)
                     .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtConteudoEmail)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(180, Short.MAX_VALUE)))
+                    .addContainerGap(192, Short.MAX_VALUE)))
         );
 
         pack();
@@ -613,6 +665,30 @@ public class InformaçãoEvento extends javax.swing.JFrame {
     private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField13ActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        TelaEventos telaEventos = new TelaEventos();
+        telaEventos.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_botaoVoltarActionPerformed
+        private EventoService eventoService = new EventoService();
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        eventoService.apagarEvento(id);
+        TelaEventos telaEventos = new TelaEventos();
+        telaEventos.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+boolean habilitado = false;
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (habilitado == false) {
+            HabilitarCampos();
+        } else {
+            eventoService.alterarEvento(id, campoNome.getText(), campoLocal.getText(), campoDataInicio.getDate(), campoDataFim.getDate(), campoConteudoEmail.getText());
+            DesabilitarCampos();
+            habilitado = false;
+            JOptionPane.showMessageDialog(rootPane, "Evento Alterado com Sucesso!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -631,31 +707,32 @@ public class InformaçãoEvento extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformaçãoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacaoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformaçãoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacaoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformaçãoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacaoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformaçãoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacaoEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InformaçãoEvento().setVisible(true);
+                new InformacaoEvento().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextArea campoConteudoEmail;
-    private javax.swing.JTextField campoDtFim;
-    private javax.swing.JTextField campoDtInicio;
+    private com.toedter.calendar.JDateChooser campoDataFim;
+    private com.toedter.calendar.JDateChooser campoDataInicio;
     private javax.swing.JTextField campoLocal;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -71,13 +71,11 @@ public class EventoDAO {
 	}
     public ArrayList<Evento> listarEventos(){
 		
+        ArrayList<Evento> lista = new ArrayList<Evento>();   
+        Query query = entityManager.createQuery("select e from Evento e");
+        lista = (ArrayList<Evento>)    query.getResultList();
 		
-		
-    ArrayList<Evento> lista = new ArrayList<Evento>();   
-    Query query = entityManager.createQuery("select e from Evento e");
-    lista = (ArrayList<Evento>)    query.getResultList();
-		
-return lista;
+        return lista;
 	}
 	public String  incluirEvento(Evento e){
 		String retorno = "Evento gravado com sucesso";
