@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Sessao")
 public class Sessao {
+
+    public Sessao() {
+    }
+    
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idSessao")
@@ -58,8 +65,11 @@ public class Sessao {
     @JoinColumn(name = "evento_Sessao")
     private Evento evento;
     
-    @ManyToOne
-    @JoinColumn(name="tipoSessao_idSessao")
+    public TipoSessao getTipoSessao() {
+        return tipoSessao;
+    }
+@Enumerated(EnumType.STRING)
+    @Column(name="tipo_sessao", nullable = false, length = 20)
     private TipoSessao tipoSessao;
     @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable(name="sessao_inscrito", 
@@ -67,9 +77,23 @@ public class Sessao {
     inverseJoinColumns=@JoinColumn(name="idSessao"))
     @Column(name = "inscritoSessao")
     private List<Inscrito> inscritos;
+
+    public Sessao(Date data, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, Evento evento, TipoSessao tipoSessao) {
+        this.data = data;
+        this.horaFim = horaFim;
+        this.horaInicio = horaInicio;
+        this.local = local;
+        this.nome = nome;
+        this.numeroMaximo = numeroMaximo;
+        this.evento = evento;
+        this.tipoSessao = tipoSessao;
+    }
     /**
      * @return the data
      */
+    
+    
+    
     public Date getData() {
         return data;
     }
@@ -207,9 +231,7 @@ public class Sessao {
     /**
      * @return the tipoSessao
      */
-    public TipoSessao getTipoSessao() {
-        return tipoSessao;
-    }
+    
 
     /**
      * @param tipoSessao the tipoSessao to set

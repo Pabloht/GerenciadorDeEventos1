@@ -24,11 +24,11 @@ public class SessaoService {
 
     private SessaoDAO sessaoDAO = new SessaoDAO();
 
-    public boolean incluirSessao(Date data, Evento evento, Date horaFim, Date horaInicio, int id, String local, String nome, int numeroMaximo, TipoSessao tipoSessao, List<Inscrito> inscrito, List<Ministrante> ministrante) {
+    public boolean incluirSessao(Date data, Evento evento, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, TipoSessao tipoSessao) {
         boolean retorno = false;
-       // Sessao sessao = new Sessao(data, evento, horaFim, horaInicio, id, local, nome, numeroMaximo, tipoSessao, inscrito, ministrante);
+        Sessao sessao = new Sessao(data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao);
         try {
-          //  sessaoDAO.incluirSessao(sessao);
+          sessaoDAO.incluirSessao(sessao);
             retorno = true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,

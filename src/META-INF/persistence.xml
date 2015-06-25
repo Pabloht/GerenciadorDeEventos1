@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="gerenciador_de_eventos" transaction-type="RESOURCE_LOCAL">
-   <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+    <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
     <class>model.Evento</class>
     <class>model.Inscrito</class>
     <class>model.Ministrante</class>
     <class>model.Sessao</class>
-    <class>model.TipoSessao</class>
     <class>model.Usuario</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/gerenciador_de_eventos"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="vertrigo"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            
+      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/gerenciador_de_eventos"/>
+      <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+      <property name="hibernate.connection.username" value="root"/>
+      <property name="hibernate.connection.password" value="vertrigo"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>
