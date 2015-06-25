@@ -24,7 +24,7 @@ public class SessaoService {
 
     private SessaoDAO sessaoDAO = new SessaoDAO();
 
-    public boolean incluirSessao(Date data, Evento evento, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, TipoSessao tipoSessao) {
+    public boolean incluirSessao(String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento) {
         boolean retorno = false;
         Sessao sessao = new Sessao(data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao);
         try {

@@ -163,6 +163,7 @@ public class CadastrarEvento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+        
         eventoService.incluirEvento(campoNome.getText(), campoLocal.getText(), jDateChooser1.getDate(), jDateChooser2.getDate(), campoConteudoEmail.getText());
         LimparCampos();
     }//GEN-LAST:event_botaoCadastrarActionPerformed

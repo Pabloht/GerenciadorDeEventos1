@@ -22,7 +22,7 @@ public class TelaEventos extends javax.swing.JFrame {
      */
     public TelaEventos() {
         initComponents();
-        jButton2.setEnabled(false);
+        jButtonInformacaoEvento.setEnabled(false);
         AtualizarTabela();
     }
     private EventoService eventoService = new EventoService();
@@ -38,11 +38,12 @@ public class TelaEventos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonCadastrarEvento = new javax.swing.JButton();
+        jButtonInformacaoEvento = new javax.swing.JButton();
+        jButtonVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,21 +85,21 @@ public class TelaEventos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel1.setText("Tela de Eventos");
 
-        jButton1.setText("Cadastrar Eventos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCadastrarEvento.setText("Cadastrar Eventos");
+        jButtonCadastrarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCadastrarEventoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Informações do Evento");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInformacaoEvento.setText("Informações do Evento");
+        jButtonInformacaoEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonInformacaoEventoActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Voltar");
+        jButtonVoltar.setText("Voltar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,11 +114,11 @@ public class TelaEventos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonInformacaoEvento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonCadastrarEvento)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,35 +130,36 @@ public class TelaEventos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonCadastrarEvento)
+                    .addComponent(jButtonInformacaoEvento)
+                    .addComponent(jButtonVoltar))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonCadastrarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarEventoActionPerformed
         CadastrarEvento ce = new CadastrarEvento();
         ce.setVisible(true);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCadastrarEventoActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         idSelecionado = 
         (int)jTable1.getValueAt(jTable1.getSelectedRow(),0);
-        jButton2.setEnabled(true);
+        jButtonInformacaoEvento.setEnabled(true);
         
         
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonInformacaoEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformacaoEventoActionPerformed
         Evento evento = BuscarEvento();
         InformacaoEvento informacaoEvento = new InformacaoEvento(evento);
         informacaoEvento.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonInformacaoEventoActionPerformed
     int idSelecionado = 0;
     
     private Evento BuscarEvento(){
@@ -216,9 +218,9 @@ public class TelaEventos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonCadastrarEvento;
+    private javax.swing.JButton jButtonInformacaoEvento;
+    private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
