@@ -5,9 +5,9 @@
         <group>
             <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/InformacaoEvento.java</file>
             <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/TelaEventos.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/Service/EventoService.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/DAO/EventoDAO.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/CadastrarEvento.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/DAO/SessaoDAO.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/TipoSessao.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/Service/SessaoService.java</file>
         </group>
     </open-files>
 </project-private>

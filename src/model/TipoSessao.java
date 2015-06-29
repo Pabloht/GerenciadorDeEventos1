@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 public enum TipoSessao {    
     
-    MINICURSO("Mini Cursos"), PALESTRA("Palestras");
+    MINICURSO("Mini Curso"), PALESTRA("Palestra");
     
    
     private String descricao;
@@ -33,7 +33,9 @@ public enum TipoSessao {
     public String getDescricao() {
         return descricao;
     }
-    
-    
-    
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+   
 }

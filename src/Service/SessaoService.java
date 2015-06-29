@@ -30,6 +30,7 @@ public class SessaoService {
         try {
           sessaoDAO.incluirSessao(sessao);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Sessão " + nome + " cadastrado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na inclusão da sessão... " + e);
@@ -37,11 +38,11 @@ public class SessaoService {
         return retorno;
     }
 
-    public boolean alterarSessao(Date data, Evento evento, Date horaFim, Date horaInicio, int id, String local, String nome, int numeroMaximo, TipoSessao tipoSessao, List<Inscrito> inscrito, List<Ministrante> ministrante) {
+    public boolean alterarSessao(int id, String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento, List<Inscrito> inscrito, List<Ministrante> ministrante) {
         boolean retorno = false;
-        //Sessao sessao = new Sessao(data, evento, horaFim, horaInicio, id, local, nome, numeroMaximo, tipoSessao, inscrito, ministrante);
+        Sessao sessao = new Sessao(id, data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao, inscrito, ministrante);
         try {
-//            sessaoDAO.alterarSessao(sessao);
+            sessaoDAO.alterarSessao(sessao);
             retorno = true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
@@ -53,6 +54,7 @@ public class SessaoService {
     public void apagarSessao(int id) {
         try {
             sessaoDAO.apagarSessao(retornarSessao(id));
+            JOptionPane.showMessageDialog(null, "Sessao Apagada Com Sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro ao apagar a sessão... " + e);
@@ -62,7 +64,7 @@ public class SessaoService {
     public Sessao retornarSessao(int id) {
         Sessao sessao = null;
         try {
-            sessaoDAO.retornarSessao(id);
+           sessao = sessaoDAO.retornarSessao(id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro no retorno da sessão... " + e);
@@ -70,10 +72,10 @@ public class SessaoService {
         return sessao;
     }
 
-    public ArrayList<Sessao> listarSessao() {
+    public ArrayList<Sessao> listarSessao(int id) {
         ArrayList<Sessao> sessao = new ArrayList<Sessao>();
         try {
-            sessao = sessaoDAO.listarSessao();
+            sessao = sessaoDAO.listarSessao(id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na listagem de sessões... " + e);

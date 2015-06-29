@@ -69,15 +69,13 @@ public class SessaoDAO {
     }
             return sessao;   
 	}
-    public ArrayList<Sessao> listarSessao(){
-		
-		
-		
+    public ArrayList<Sessao> listarSessao(int id){
+	
     ArrayList<Sessao> lista = new ArrayList<Sessao>();   
-    Query query = entityManager.createQuery("select s from Sessao s");
+    Query query = entityManager.createQuery("select s from Sessao as s where s.evento = " + id);
     lista = (ArrayList<Sessao>)    query.getResultList();
 		
-return lista;
+return lista;  
 	}
 	public String  incluirSessao(Sessao s){
 		String retorno = "Sessao gravada com sucesso";
