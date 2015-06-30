@@ -77,7 +77,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
         campoLocal = new javax.swing.JTextField();
         txtDtInicio = new javax.swing.JLabel();
         botaoAlterarEvento = new javax.swing.JButton();
-        BotaoApagarEvento = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         botaoVoltar = new javax.swing.JButton();
@@ -159,10 +159,10 @@ public class InformacaoEvento extends javax.swing.JFrame {
             }
         });
 
-        BotaoApagarEvento.setText("Apagar Evento");
-        BotaoApagarEvento.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("Apagar Evento");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoApagarEventoActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -229,18 +229,8 @@ public class InformacaoEvento extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabelaSessao);
 
         botaoAlterarSessao.setText("Alterar Sessão");
-        botaoAlterarSessao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAlterarSessaoActionPerformed(evt);
-            }
-        });
 
         botaoApagarSessao.setText("Apagar Sessão");
-        botaoApagarSessao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoApagarSessaoActionPerformed(evt);
-            }
-        });
 
         campoLocalSessao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,6 +252,12 @@ public class InformacaoEvento extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel1.setText("Informações das Sessões");
+
+        campoNumeroInscritos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNumeroInscritosActionPerformed(evt);
+            }
+        });
 
         BoxTipoSessao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione um Tipo..." }));
 
@@ -630,7 +626,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotaoApagarEvento)
+                        .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoAlterarEvento)
                         .addGap(18, 18, 18))
@@ -683,7 +679,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAlterarEvento)
-                    .addComponent(BotaoApagarEvento)
+                    .addComponent(jButton3)
                     .addComponent(botaoVoltar))
                 .addContainerGap())
             .addComponent(jTabbedPane2)
@@ -725,12 +721,12 @@ public class InformacaoEvento extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed
         private EventoService eventoService = new EventoService();
-    private void BotaoApagarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarEventoActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         eventoService.apagarEvento(id);
         TelaEventos telaEventos = new TelaEventos();
         telaEventos.setVisible(true);
         dispose();
-    }//GEN-LAST:event_BotaoApagarEventoActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 boolean habilitado = false;
     private void botaoAlterarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarEventoActionPerformed
         if (habilitado == false) {
@@ -809,37 +805,9 @@ boolean habilitado = false;
         botaoApagarSessao.setEnabled(true);
     }//GEN-LAST:event_tabelaSessaoMouseClicked
 
-    private void botaoApagarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarSessaoActionPerformed
-        sessaoService.apagarSessao(idSelecionado);
-        LimparCamposSessao();
-        AtualizarTabelaSessao();
-    }//GEN-LAST:event_botaoApagarSessaoActionPerformed
-
-    private void botaoAlterarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarSessaoActionPerformed
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");  
-        String horaInicio = campoHoraInicioSessao.getText();  
-        String horaFim = campoHoraFimSessao.getText();
-        int numeroMaxInscritos = Integer.valueOf(campoNumeroInscritos.getText());
-        Date horaInicioSessao = null;  
-        Date horaFimSessao = null;
-        try {
-            horaInicioSessao = sdf.parse(horaInicio);
-            horaFimSessao = sdf.parse(horaFim);  
-        } catch (ParseException ex) {
-            Logger.getLogger(InformacaoEvento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if (BoxTipoSessao.getSelectedItem().equals(TipoSessao.PALESTRA)) {
-            sessaoService.alterarSessao(idSelecionado ,campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.PALESTRA, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, null);    
-        } else if(BoxTipoSessao.getSelectedItem().equals(TipoSessao.MINICURSO)) {
-            sessaoService.alterarSessao(idSelecionado, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.MINICURSO, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, null);    
-        }
-        AtualizarTabelaSessao();
-        LimparCamposSessao();
-        
-    }//GEN-LAST:event_botaoAlterarSessaoActionPerformed
+    private void campoNumeroInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNumeroInscritosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNumeroInscritosActionPerformed
     
     //----------------------------------------Métodos------------------------------------
     
@@ -925,7 +893,6 @@ boolean habilitado = false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoApagarEvento;
     private javax.swing.JButton BotaoCadastrarSessao;
     private javax.swing.JComboBox BoxTipoSessao;
     private javax.swing.JButton botaoAlterarEvento;
@@ -945,6 +912,7 @@ boolean habilitado = false;
     private javax.swing.JTextField campoNomeSessao;
     private javax.swing.JTextField campoNumeroInscritos;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox jComboBox1;
