@@ -88,6 +88,17 @@ public class Sessao {
         this.evento = evento;
         this.tipoSessao = tipoSessao;
     }
+    public Sessao(int id, Date data, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, Evento evento, TipoSessao tipoSessao,List<Inscrito> inscrito, List<Ministrante> ministrante) {
+        this.id = id;
+        this.data = data;
+        this.horaFim = horaFim;
+        this.horaInicio = horaInicio;
+        this.local = local;
+        this.nome = nome;
+        this.numeroMaximo = numeroMaximo;
+        this.evento = evento;
+        this.tipoSessao = tipoSessao;
+    }
     /**
      * @return the data
      */
