@@ -20,12 +20,13 @@ import javax.swing.JOptionPane;
 public class InscritoService {
     private InscritoDAO inscritoDAO = new InscritoDAO();
 
-    public boolean incluirInscrito(int id, String instituicao, String naturalidade, String nome, String cpf, Date dataNascimento, String email, List<Sessao> sessao) {
+    public boolean incluirInscrito(String nome, String cpf, String instituicao, String naturalidade, Date dataNascimento, String email) {
         boolean retorno = false;
-        //Inscrito inscrito = new Inscrito(id, instituicao, naturalidade, nome, cpf, dataNascimento, email, sessao);
+        Inscrito inscrito = new Inscrito( nome, cpf, instituicao, naturalidade,dataNascimento, email);
         try {
-//            inscritoDAO.incluirInscrito(inscrito);
+            inscritoDAO.incluirInscrito(inscrito);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Inscrito inserido com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na inclusão do inscrito... " + e);
@@ -33,12 +34,13 @@ public class InscritoService {
         return retorno;
     }
 
-    public boolean alterarInscrito(int id, String instituicao, String naturalidade, String nome, String cpf, Date dataNascimento, String email, List<Sessao> sessao) {
+    public boolean alterarInscrito(int id, String nome, String cpf, String instituicao, String naturalidade, Date dataNascimento, String email) {
         boolean retorno = false;
-        //Inscrito inscrito = new Inscrito(id, instituicao, naturalidade, nome, cpf, dataNascimento, email, sessao);
+        Inscrito inscrito = new Inscrito(id, nome, cpf, instituicao, naturalidade,dataNascimento, email);
         try {
-//            inscritoDAO.alterarInscrito(inscrito);
+            inscritoDAO.alterarInscrito(inscrito);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Inscrito alterado com Sucesso");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na alteração do inscrito... " + e);
@@ -49,6 +51,7 @@ public class InscritoService {
     public void apagarInscrito(int id) {
         try {
             inscritoDAO.apagarInscrito(retornarInscrito(id));
+                    JOptionPane.showMessageDialog(null, "Inscrito apagado com Sucesso");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro ao apagar o inscrito... " + e);
@@ -58,7 +61,7 @@ public class InscritoService {
     public Inscrito retornarInscrito(int id) {
         Inscrito inscrito = null;
         try {
-            inscritoDAO.retornarInscrito(id);
+           inscrito = inscritoDAO.retornarInscrito(id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro no retorno do inscrito... " + e);

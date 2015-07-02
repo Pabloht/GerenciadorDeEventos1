@@ -9,12 +9,13 @@ public class MinistranteService {
 
     private MinistranteDAO ministranteDAO = new MinistranteDAO();
 
-    public boolean incluirMinistrante(String email, String nome, String telefone) {
+    public boolean incluirMinistrante(String nome, String telefone, String email, String curriculo) {
         boolean retorno = false;
-       // Ministrante ministrante = new Ministrante(email, nome, telefone);
+        Ministrante ministrante = new Ministrante(nome, telefone, email, curriculo);
         try {
-         //   ministranteDAO.incluirMinistrante(ministrante);
+            ministranteDAO.incluirMinistrante(ministrante);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Ministrante cadastrado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na inclusão do ministrante... " + e);
@@ -22,12 +23,13 @@ public class MinistranteService {
         return retorno;
     }
 
-    public boolean alterarMinistrante(Integer id, String email, String nome, String telefone) {
+    public boolean alterarMinistrante(int id, String nome, String telefone, String email, String curriculo) {
         boolean retorno = false;
-        //Ministrante ministrante = new Ministrante(id, email, nome, telefone);
+        Ministrante ministrante = new Ministrante(id, nome, telefone, email, curriculo);
         try {
-          //  ministranteDAO.alterarMinistrante(ministrante);
+            ministranteDAO.alterarMinistrante(ministrante);
             retorno = true;
+            JOptionPane.showMessageDialog(null, "Ministrante alterado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na alteração do ministrante... " + e);
@@ -38,6 +40,7 @@ public class MinistranteService {
     public void apagarMinistrante(int id) {
         try {
             ministranteDAO.apagarMinistrante(retornarMinistrante(id));
+            JOptionPane.showMessageDialog(null, "Ministrante apagado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro ao apagar o ministrante... " + e);
@@ -45,20 +48,21 @@ public class MinistranteService {
     }
 
     public Ministrante retornarMinistrante(int id) {
-        Ministrante evento = null;
+        Ministrante ministrante = null;
         try {
-            ministranteDAO.retornarMinistrante(id);
+           ministrante =  ministranteDAO.retornarMinistrante(id);
+           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro no retorno do ministrante... " + e);
         }
-        return evento;
+        return ministrante;
     }
 
     public ArrayList<Ministrante> listarMinistrante() {
         ArrayList<Ministrante> ministrantes = new ArrayList<Ministrante>();
         try {
-//            ministrantes = ministranteDAO.listarMinistrante();
+            ministrantes = ministranteDAO.listarMinistrantes();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Erro na listagem de ministrantes... " + e);

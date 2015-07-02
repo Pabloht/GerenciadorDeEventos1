@@ -4,9 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/InformacaoEvento.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/views/TelaEventos.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/DAO/SessaoDAO.java</file>
-            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/TipoSessao.java</file>
+            <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/model/Sessao.java</file>
             <file>file:/C:/Users/PabloHenrique/Documents/NetBeansProjects/GerenciadorDeEventos/src/Service/SessaoService.java</file>
         </group>
     </open-files>

@@ -229,8 +229,18 @@ public class InformacaoEvento extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabelaSessao);
 
         botaoAlterarSessao.setText("Alterar Sessão");
+        botaoAlterarSessao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarSessaoActionPerformed(evt);
+            }
+        });
 
         botaoApagarSessao.setText("Apagar Sessão");
+        botaoApagarSessao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoApagarSessaoActionPerformed(evt);
+            }
+        });
 
         campoLocalSessao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -705,6 +715,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
@@ -808,6 +819,42 @@ boolean habilitado = false;
     private void campoNumeroInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNumeroInscritosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNumeroInscritosActionPerformed
+
+    private void botaoApagarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarSessaoActionPerformed
+        sessaoService.apagarSessao(idSelecionado);
+        AtualizarTabelaSessao();
+        LimparCamposSessao();
+        BotaoCadastrarSessao.setEnabled(true);
+        idSelecionado = 0;
+        
+    }//GEN-LAST:event_botaoApagarSessaoActionPerformed
+
+    private void botaoAlterarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarSessaoActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");  
+        String horaInicio = campoHoraInicioSessao.getText();  
+        String horaFim = campoHoraFimSessao.getText();
+        int numeroMaxInscritos = Integer.valueOf(campoNumeroInscritos.getText());
+        Date horaInicioSessao = null;  
+        Date horaFimSessao = null;
+        try {
+            horaInicioSessao = sdf.parse(horaInicio);
+            horaFimSessao = sdf.parse(horaFim);  
+        } catch (ParseException ex) {
+            Logger.getLogger(InformacaoEvento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (BoxTipoSessao.getSelectedItem().equals(TipoSessao.PALESTRA)) {
+            sessaoService.alterarSessao(idSelecionado, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.PALESTRA, 
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, null);    
+        } else if(BoxTipoSessao.getSelectedItem().equals(TipoSessao.MINICURSO)) {
+            sessaoService.alterarSessao(id, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.MINICURSO, 
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, null);    
+        }        
+        AtualizarTabelaSessao();
+        LimparCamposSessao();
+        BotaoCadastrarSessao.setEnabled(true);
+        idSelecionado = 0;
+    }//GEN-LAST:event_botaoAlterarSessaoActionPerformed
     
     //----------------------------------------Métodos------------------------------------
     
@@ -834,8 +881,8 @@ boolean habilitado = false;
     
     private void AtualizarTabelaSessao() {
         List <Sessao> listaSessao = new ArrayList();   
-        DefaultTableModel model = (DefaultTableModel) tabelaSessao.getModel();  
         listaSessao = sessaoService.listarSessao(id) ;
+        DefaultTableModel model = (DefaultTableModel) tabelaSessao.getModel();  
         model.setRowCount(0);
        
         for (Sessao s : listaSessao) {   
@@ -855,6 +902,7 @@ boolean habilitado = false;
         campoDataSessao.setDate(null);
         BoxTipoSessao.setSelectedIndex(0);
         idSelecionado = 0;
+        
     }
     /**
      * @param args the command line arguments

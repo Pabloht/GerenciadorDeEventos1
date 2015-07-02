@@ -38,6 +38,26 @@ public class Ministrante {
     @ManyToMany(mappedBy = "ministrantes", cascade = CascadeType.ALL)
     @Column(name = "sessao")
     private List<Sessao> sessao;
+
+    public Ministrante(String nome, String telefone, String email, String curriculo) {
+        
+        this.curriculo = curriculo;
+        this.email = email;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+    public Ministrante(int id, String nome, String telefone, String email, String curriculo) {
+        this.id = id;
+        this.curriculo = curriculo;
+        this.email = email;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
+    public Ministrante() {
+    }
+    
+    
     
     /**0
      * @return the id

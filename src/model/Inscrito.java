@@ -44,6 +44,29 @@ public class Inscrito {
     @ManyToMany(mappedBy = "inscritos", cascade = CascadeType.ALL)
     private List<Sessao> sessao;
 
+    public Inscrito(String nome, String cpf, String instituicao, String naturalidade, Date dataNascimento, String email) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.instituicao = instituicao;
+        this.naturalidade = naturalidade;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+    }
+    public Inscrito(int id, String nome, String cpf, String instituicao, String naturalidade, Date dataNascimento, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.instituicao = instituicao;
+        this.naturalidade = naturalidade;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+    }
+
+    public Inscrito() {
+    }
+
+    
+    
     /**
      * @return the cpf
      */
