@@ -37,7 +37,22 @@ public class SessaoService {
         }
         return retorno;
     }
-
+    
+    public boolean incluirMinistrante(String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento, List<Ministrante> ministrantes, List<Inscrito> inscritos) {
+        boolean retorno = false;
+        Sessao sessao = new Sessao(data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao, ministrantes, inscritos);
+        try {
+            sessaoDAO.incluirSessao(sessao);
+            retorno = true;
+            JOptionPane.showMessageDialog(null, "Deu certo!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro ao cadastrar o ministrante na sessao : " + e);
+        }
+        
+        
+        return retorno;
+    }
+    
     public boolean alterarSessao(int id, String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento, List<Inscrito> inscrito, List<Ministrante> ministrante) {
         boolean retorno = false;
         Sessao sessao = new Sessao(id, data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao, inscrito, ministrante);

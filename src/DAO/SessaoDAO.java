@@ -84,7 +84,9 @@ return lista;
 		 
         try {
             tx.begin();
+            
             getEntityManager().persist(s);
+            
             tx.commit();
         } catch (Throwable t) {
             t.printStackTrace();

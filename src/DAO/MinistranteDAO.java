@@ -79,6 +79,18 @@ public class MinistranteDAO {
 		
 return lista;
 	}
+    
+      public ArrayList<Ministrante> listarMinistrantesPorSessao(int id){
+	
+    ArrayList<Ministrante> lista = new ArrayList<Ministrante>();   
+    Query query = entityManager.createNativeQuery("select m.idMinistrante, m.nomeMinistrante, m.telefoneMinistrante, m.emailMinistrante, m.curriculoMinistrante from ministrante as m inner join sessao_ministrante as sm on sm.idSessao = 2", Ministrante.class);
+                
+    lista = (ArrayList<Ministrante>)    query.getResultList();
+		
+return lista;  
+	}
+    
+    
 	public String  incluirMinistrante(Ministrante i){
 		String retorno = "Ministrante gravado com sucesso";
 		

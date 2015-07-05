@@ -22,7 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Inscrito")
-
+ 
 public class Inscrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Inscrito {
     private Date dataNascimento;
     @Column(name = "emailInscrito")
     private String email;
-    @Column(name = "sessaoInscrito")
+    @Column(name = "sessao")
     @ManyToMany(mappedBy = "inscritos", cascade = CascadeType.ALL)
     private List<Sessao> sessao;
 

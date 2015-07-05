@@ -55,7 +55,7 @@ public class Sessao {
     
     
     
-    @ManyToMany (cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="sessao_ministrante", 
       joinColumns=@JoinColumn(name="idsessao"),
       inverseJoinColumns=@JoinColumn(name="idministrante"))
@@ -71,7 +71,8 @@ public class Sessao {
 @Enumerated(EnumType.STRING)
     @Column(name="tipo_sessao", nullable = false, length = 20)
     private TipoSessao tipoSessao;
-    @ManyToMany (cascade = CascadeType.ALL)
+
+    @ManyToMany 
     @JoinTable(name="sessao_inscrito", 
     joinColumns=@JoinColumn(name="idInscrito"),
     inverseJoinColumns=@JoinColumn(name="idSessao"))
@@ -88,6 +89,20 @@ public class Sessao {
         this.evento = evento;
         this.tipoSessao = tipoSessao;
     }
+    public Sessao(Date data, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, Evento evento, TipoSessao tipoSessao, List<Ministrante> ministrantes, List<Inscrito> inscritos) {
+        this.data = data;
+        this.inscritos = inscritos;
+        this.horaFim = horaFim;
+        this.horaInicio = horaInicio;
+        this.local = local;
+        this.nome = nome;
+        this.numeroMaximo = numeroMaximo;
+        this.evento = evento;
+        this.tipoSessao = tipoSessao;
+        this.ministrantes = ministrantes;
+    }
+
+    
     public Sessao(int id, Date data, Date horaFim, Date horaInicio, String local, String nome, int numeroMaximo, Evento evento, TipoSessao tipoSessao,List<Inscrito> inscrito, List<Ministrante> ministrante) {
         this.id = id;
         this.data = data;

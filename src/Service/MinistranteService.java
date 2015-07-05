@@ -58,7 +58,19 @@ public class MinistranteService {
         }
         return ministrante;
     }
-
+public ArrayList<Ministrante> listarMinistrantePorSessao(int id) {
+     ArrayList<Ministrante> ministrantes = new ArrayList<Ministrante>();
+    try {
+            ministrantes = ministranteDAO.listarMinistrantesPorSessao(id);
+           
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro na listagem de ministrantes por Sessao... " + e);
+        }
+        return ministrantes;
+    
+}
+        
     public ArrayList<Ministrante> listarMinistrante() {
         ArrayList<Ministrante> ministrantes = new ArrayList<Ministrante>();
         try {
