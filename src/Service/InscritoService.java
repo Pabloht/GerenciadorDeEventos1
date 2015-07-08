@@ -79,4 +79,24 @@ public class InscritoService {
         }
         return inscritos;
     }
+    public ArrayList<Inscrito> listarInscritoPorSessao(int id) {
+        ArrayList<Inscrito> listaInscritos = new ArrayList<Inscrito>();
+        try {
+            listaInscritos = inscritoDAO.listarInscritosPorSessao(id);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro na listagem dos inscritos... " + e);
+        }
+        return listaInscritos;
+    }
+    
+    public void apagarInscritoPorSessao(int id) {
+        try {
+            inscritoDAO.apagarInscritoSessao(id);
+                    JOptionPane.showMessageDialog(null, "Inscrito apagado com Sucesso");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao apagar o inscrito... " + e);
+        }
+    }
 }

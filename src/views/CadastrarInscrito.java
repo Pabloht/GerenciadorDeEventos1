@@ -5,7 +5,9 @@
  */
 package views;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Inscrito;
@@ -28,6 +30,7 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         initComponents();
         AtualizarTabela();
         LimparCampos();
+        campoDataNascimentoInscrito.setMaxSelectableDate(Date.from(Instant.now()));
     }
 
     /**
@@ -42,7 +45,6 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         campoNomeInscrito = new javax.swing.JTextField();
         campoEmailInscrito = new javax.swing.JTextField();
-        campoCpfInscrito = new javax.swing.JTextField();
         jLabelNomeInscrito = new javax.swing.JLabel();
         jLabelEmailInscrito = new javax.swing.JLabel();
         jLabelCpfInscrito = new javax.swing.JLabel();
@@ -60,6 +62,7 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         botaoLimparCampos = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
+        campoCpfInscrito = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,6 +141,12 @@ public class CadastrarInscrito extends javax.swing.JFrame {
             }
         });
 
+        try {
+            campoCpfInscrito.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -168,13 +177,13 @@ public class CadastrarInscrito extends javax.swing.JFrame {
                             .addComponent(jLabelInstituicaoInscrito)
                             .addComponent(txtDataNascimentoInscrito))
                         .addGap(18, 18, 18)
-                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(campoDataNascimentoInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoInstituicaoInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoNaturalidadeInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoEmailInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoCpfInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoNomeInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoInstituicaoInscrito, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(campoNaturalidadeInscrito, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(campoEmailInscrito, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(campoNomeInscrito, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(campoCpfInscrito))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(botaoLimparCampos)
@@ -212,7 +221,7 @@ public class CadastrarInscrito extends javax.swing.JFrame {
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDataNascimentoInscrito)
                             .addComponent(campoDataNascimentoInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoCadastrar)
                             .addComponent(botaoLimparCampos)))
@@ -351,7 +360,7 @@ private void AtualizarTabela() {
     private javax.swing.JButton botaoApagar;
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoLimparCampos;
-    private javax.swing.JTextField campoCpfInscrito;
+    private javax.swing.JFormattedTextField campoCpfInscrito;
     private com.toedter.calendar.JDateChooser campoDataNascimentoInscrito;
     private javax.swing.JTextField campoEmailInscrito;
     private javax.swing.JTextField campoInstituicaoInscrito;

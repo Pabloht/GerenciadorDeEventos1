@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -78,10 +78,10 @@
                                                       </Group>
                                                   </Group>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="campoEmailMinistrante" min="-2" pref="217" max="-2" attributes="0"/>
-                                                      <Component id="CampoTelefoneMinistrante" min="-2" pref="217" max="-2" attributes="0"/>
-                                                      <Component id="campoNomeMinistrante" min="-2" pref="217" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="campoEmailMinistrante" pref="217" max="32767" attributes="0"/>
+                                                      <Component id="campoNomeMinistrante" pref="217" max="32767" attributes="0"/>
+                                                      <Component id="CampoTelefoneMinistrante" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Component id="botaoCadastrarCurriculo" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -139,7 +139,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="157" max="-2" attributes="0"/>
-                          <EmptySpace pref="90" max="32767" attributes="0"/>
+                          <EmptySpace pref="118" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="BotaoVoltarMinistrante" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -164,8 +164,6 @@
         <Component class="javax.swing.JTextField" name="campoNomeMinistrante">
         </Component>
         <Component class="javax.swing.JTextField" name="campoEmailMinistrante">
-        </Component>
-        <Component class="javax.swing.JTextField" name="CampoTelefoneMinistrante">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -255,6 +253,13 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoApagarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="CampoTelefoneMinistrante">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="(##)####-####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

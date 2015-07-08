@@ -40,7 +40,6 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         botaoCadastrarCurriculo = new javax.swing.JButton();
         campoNomeMinistrante = new javax.swing.JTextField();
         campoEmailMinistrante = new javax.swing.JTextField();
-        CampoTelefoneMinistrante = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -53,6 +52,7 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         botaoLimparCampos = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
+        CampoTelefoneMinistrante = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,6 +137,12 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
             }
         });
 
+        try {
+            CampoTelefoneMinistrante.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -170,10 +176,10 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
                                                             .addComponent(jLabel1)
                                                             .addComponent(jLabel3))))
                                                 .addGap(18, 18, 18)
-                                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(campoEmailMinistrante, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(CampoTelefoneMinistrante, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(campoNomeMinistrante, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(campoEmailMinistrante, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                                                    .addComponent(campoNomeMinistrante, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                                                    .addComponent(CampoTelefoneMinistrante)))
                                             .addComponent(botaoCadastrarCurriculo))))
                                 .addGap(11, 11, 11))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
@@ -213,7 +219,7 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
                             .addComponent(botaoLimparCampos)))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoVoltarMinistrante)
                             .addComponent(botaoAlterar)
@@ -351,7 +357,7 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoVoltarMinistrante;
-    private javax.swing.JTextField CampoTelefoneMinistrante;
+    private javax.swing.JFormattedTextField CampoTelefoneMinistrante;
     private javax.swing.JButton botaoAlterar;
     private javax.swing.JButton botaoApagar;
     private javax.swing.JButton botaoCadastrar;

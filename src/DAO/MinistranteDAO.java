@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import model.Ministrante;
+import model.Sessao;
 import util.EntityManagerUtil;
 
 /**
@@ -83,7 +84,9 @@ return lista;
       public ArrayList<Ministrante> listarMinistrantesPorSessao(int id){
 	
     ArrayList<Ministrante> lista = new ArrayList<Ministrante>();   
-    Query query = entityManager.createNativeQuery("select m.idMinistrante, m.nomeMinistrante, m.telefoneMinistrante, m.emailMinistrante, m.curriculoMinistrante from ministrante as m inner join sessao_ministrante as sm on sm.idSessao = 2", Ministrante.class);
+    Query query = entityManager.createNativeQuery("select m.idMinistrante, m.nomeMinistrante, "
+            + "m.telefoneMinistrante, m.emailMinistrante, m.curriculoMinistrante from ministrante as m "
+            + "inner join sessao_ministrante as sm on sm.idSessao = "+ id + " where sm.idMinistrante = m.idMinistrante;", Ministrante.class);
                 
     lista = (ArrayList<Ministrante>)    query.getResultList();
 		
@@ -109,5 +112,26 @@ return lista;
 		
 		return retorno;
 		
-	}   
+	}
+        
+        public String apagarMinistranteSessao(int id){
+         		String retorno = "Ministrante apagado com sucesso";
+		EntityTransaction tx = getEntityManager().getTransaction();
+		 
+        try {
+            tx.begin();
+            Query query = entityManager.createNativeQuery("delete sm from sessao_ministrante as sm  inner join ministrante m\n" +
+                                                                    "on sm.idMinistrante = m.idMinistrante\n" +
+                                                                    "where sm.idMinistrante = " + id, Sessao.class);
+            query.executeUpdate();
+            tx.commit();
+        } catch (Throwable t) {
+            t.printStackTrace();
+            tx.rollback();
+        } finally {
+           
+        }
+            
+            return retorno;
+        }
 }

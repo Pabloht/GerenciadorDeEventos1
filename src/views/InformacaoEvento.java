@@ -7,6 +7,7 @@ package views;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public class InformacaoEvento extends javax.swing.JFrame {
         
         initComponents();
         
+        campoDataInicio.setMinSelectableDate(Date.from(Instant.now()));
+        campoDataFim.setMinSelectableDate(Date.from(Instant.now()));
         preencherEvento(evento);        
         DesabilitarCamposEvento();
         Sessao s = new Sessao();
@@ -49,29 +52,24 @@ public class InformacaoEvento extends javax.swing.JFrame {
         boxMinistrante.addItem(listaMinistrante.get(cont).getNome());
         cont++;
         }
+        cont = 0;
+        listaInscrito = inscritoService.listarInscrito();
+        while(listaInscrito.size() > cont) {
+        boxInscrito.addItem(listaInscrito.get(cont).getNome());
+        cont++;
+        }
     }
     
-    private void preencherEvento(Evento evento){
-        e = evento;
-        id = evento.getId();
-        campoNome.setText(evento.getNome());
-        campoLocal.setText(evento.getLocal());
-        campoDataInicio.setDate(evento.getDataInicio());
-        campoDataFim.setDate(evento.getDataFim());
-        campoConteudoEmail.setText(evento.getConteudoEmail());
-    }
-    ArrayList<Ministrante> listaMinistrante = new ArrayList<Ministrante>();
-    Evento e = new Evento();
+  
+    
     private SessaoService sessaoService = new SessaoService();
     private MinistranteService ministranteService = new MinistranteService();
     private InscritoService inscritoService = new InscritoService();
-    
+    private EventoService eventoService = new EventoService();
     
     private InformacaoEvento() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    int cont = 0;
-    int id = 0;
     
     
     
@@ -96,7 +94,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
         campoLocal = new javax.swing.JTextField();
         txtDtInicio = new javax.swing.JLabel();
         botaoAlterarEvento = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botaoApagarEvento = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         botaoVoltar = new javax.swing.JButton();
@@ -115,7 +113,6 @@ public class InformacaoEvento extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        campoHoraInicioSessao = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         campoHoraFimSessao = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -123,10 +120,15 @@ public class InformacaoEvento extends javax.swing.JFrame {
         campoNumeroInscritos = new javax.swing.JTextField();
         BoxTipoSessao = new javax.swing.JComboBox();
         campoDataSessao = new com.toedter.calendar.JDateChooser();
+        campoHoraInicioSessao = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tabelaInscrito = new javax.swing.JTable();
         jLabel19 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        boxInscrito = new javax.swing.JComboBox();
+        botaoRemoverInscrito = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         boxMinistrante = new javax.swing.JComboBox();
@@ -136,8 +138,8 @@ public class InformacaoEvento extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoremoverMinistrantes = new javax.swing.JButton();
+        botaoCurriculo = new javax.swing.JButton();
         campoDataInicio = new com.toedter.calendar.JDateChooser();
         campoDataFim = new com.toedter.calendar.JDateChooser();
 
@@ -164,10 +166,10 @@ public class InformacaoEvento extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Apagar Evento");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botaoApagarEvento.setText("Apagar Evento");
+        botaoApagarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botaoApagarEventoActionPerformed(evt);
             }
         });
 
@@ -276,28 +278,42 @@ public class InformacaoEvento extends javax.swing.JFrame {
 
         BoxTipoSessao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione um Tipo..." }));
 
+        campoDataSessao.setMinSelectableDate(new java.util.Date(-62135755086000L));
+
+        campoHoraInicioSessao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        campoHoraInicioSessao.setText("  :  ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel8)
-                .addGap(57, 57, 57)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(campoDataSessao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BoxTipoSessao, 0, 157, Short.MAX_VALUE))
-                .addGap(41, 41, 41)
-                .addComponent(jLabel10)
-                .addGap(18, 27, Short.MAX_VALUE)
-                .addComponent(campoNumeroInscritos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(1, 1, 1)
-                .addComponent(campoHoraFimSessao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel8)
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(campoHoraInicioSessao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(1, 1, 1)
+                        .addComponent(campoHoraFimSessao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoDataSessao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BoxTipoSessao, 0, 157, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel10)
+                        .addGap(18, 27, Short.MAX_VALUE)
+                        .addComponent(campoNumeroInscritos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -323,11 +339,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(campoLocalSessao, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-                                                .addComponent(campoNomeSessao)))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(campoHoraInicioSessao, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(campoNomeSessao)))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(134, 134, 134)
                                     .addComponent(jLabel1)))
@@ -346,7 +358,9 @@ public class InformacaoEvento extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(campoHoraFimSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoHoraFimSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoHoraInicioSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(campoDataSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,11 +384,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                         .addComponent(campoLocalSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addComponent(jLabel5)
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(campoHoraInicioSessao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(BotaoCadastrarSessao)
                         .addComponent(botaoLimparCampos)
@@ -385,23 +395,23 @@ public class InformacaoEvento extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Sessão", jPanel1);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaInscrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "Local", "Tipo"
+                "Id", "Nome", "Cpf", "Email", "Instituição"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -412,31 +422,78 @@ public class InformacaoEvento extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTable3);
+        tabelaInscrito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaInscritoMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tabelaInscrito);
 
         jLabel19.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel19.setText("Informações de Inscritos");
+
+        jLabel11.setText("Inscritos: ");
+
+        boxInscrito.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione um Inscrito..." }));
+        boxInscrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxInscritoActionPerformed(evt);
+            }
+        });
+
+        botaoRemoverInscrito.setText("Remover Inscrito");
+        botaoRemoverInscrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRemoverInscritoActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoRemoverInscrito)
+                .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jLabel19)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel19)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(27, 27, 27)
+                                .addComponent(boxInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)))
+                        .addGap(27, 27, 27)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel19)
-                .addGap(40, 40, 40)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(boxInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                .addComponent(botaoRemoverInscrito)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Inscrito", jPanel3);
@@ -490,17 +547,17 @@ public class InformacaoEvento extends javax.swing.JFrame {
             }
         });
 
-        jButton10.setText("Remover Ministrante");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        botaoremoverMinistrantes.setText("Remover Ministrante");
+        botaoremoverMinistrantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                botaoremoverMinistrantesActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Ver Curriculo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoCurriculo.setText("Ver Curriculo");
+        botaoCurriculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoCurriculoActionPerformed(evt);
             }
         });
 
@@ -510,7 +567,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton10)
+                .addComponent(botaoremoverMinistrantes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9)
                 .addContainerGap())
@@ -533,7 +590,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(botaoCurriculo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
@@ -554,15 +611,21 @@ public class InformacaoEvento extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jButton1))
+                    .addComponent(botaoCurriculo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9)
-                    .addComponent(jButton10))
+                    .addComponent(botaoremoverMinistrantes))
                 .addGap(19, 19, 19))
         );
 
         jTabbedPane2.addTab("Ministrantes", jPanel2);
+
+        campoDataInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                campoDataInicioPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -574,7 +637,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(botaoApagarEvento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoAlterarEvento)
                         .addGap(18, 18, 18))
@@ -627,7 +690,7 @@ public class InformacaoEvento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAlterarEvento)
-                    .addComponent(jButton3)
+                    .addComponent(botaoApagarEvento)
                     .addComponent(botaoVoltar))
                 .addContainerGap())
             .addComponent(jTabbedPane2)
@@ -656,19 +719,21 @@ public class InformacaoEvento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+ //------------------------------------Evento----------------------------------------//   
+    
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         TelaEventos telaEventos = new TelaEventos();
         telaEventos.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed
-        private EventoService eventoService = new EventoService();
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+    private void botaoApagarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarEventoActionPerformed
         eventoService.apagarEvento(id);
         TelaEventos telaEventos = new TelaEventos();
         telaEventos.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
-boolean habilitado = false;
+    }//GEN-LAST:event_botaoApagarEventoActionPerformed
+
     private void botaoAlterarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarEventoActionPerformed
         if (habilitado == false) {
             HabilitarCamposEvento();
@@ -701,13 +766,13 @@ boolean habilitado = false;
         } catch (ParseException ex) {
             Logger.getLogger(InformacaoEvento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        listaInscrito = inscritoService.listarInscrito();
+      
         if (BoxTipoSessao.getSelectedItem().equals(TipoSessao.PALESTRA)) {
             sessaoService.incluirMinistrante(campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.PALESTRA, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, listaMinistrante, listaInscrito);    
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, listaMinistranteFinal, listaInscritoFinal);    
         } else if(BoxTipoSessao.getSelectedItem().equals(TipoSessao.MINICURSO)) {
             sessaoService.incluirMinistrante(campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.MINICURSO, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, listaMinistrante, listaInscrito);    
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, listaMinistranteFinal, listaInscritoFinal);    
         }        
         AtualizarTabelaSessao();
         LimparCamposSessao();
@@ -715,16 +780,16 @@ boolean habilitado = false;
 
     private void botaoLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparCamposActionPerformed
         LimparCamposSessao();
-        BotaoCadastrarSessao.setEnabled(true);
-        
-        
+        BotaoCadastrarSessao.setEnabled(true);  
     }//GEN-LAST:event_botaoLimparCamposActionPerformed
-    int idSelecionado = 0;
+    
     private void tabelaSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaSessaoMouseClicked
+        LimparCamposSessao();
         Sessao sessao = new Sessao();
-        idSelecionado = 
+        idSelecionadoSessao = 
         (int)tabelaSessao.getValueAt(tabelaSessao.getSelectedRow(),0);
-        sessao = sessaoService.retornarSessao(idSelecionado);
+        sessao = sessaoService.retornarSessao(idSelecionadoSessao);
+        
         String horaInicio = null;
         String horaFim = null;
         
@@ -748,6 +813,7 @@ boolean habilitado = false;
         botaoAlterarSessao.setEnabled(true);
         botaoApagarSessao.setEnabled(true);
         AtualizarTabelaMinistrante();
+        AtualizarTabelaInscrito();
     }//GEN-LAST:event_tabelaSessaoMouseClicked
 
     private void campoNumeroInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNumeroInscritosActionPerformed
@@ -755,15 +821,17 @@ boolean habilitado = false;
     }//GEN-LAST:event_campoNumeroInscritosActionPerformed
 
     private void botaoApagarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarSessaoActionPerformed
-        sessaoService.apagarSessao(idSelecionado);
+        sessaoService.apagarSessao(idSelecionadoSessao);
         AtualizarTabelaSessao();
         LimparCamposSessao();
         BotaoCadastrarSessao.setEnabled(true);
-        idSelecionado = 0;
+        idSelecionadoSessao = 0;
         
     }//GEN-LAST:event_botaoApagarSessaoActionPerformed
 
     private void botaoAlterarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarSessaoActionPerformed
+        listaMinistranteFinal.addAll(listaChaveMinistrante);
+        listaInscritoFinal.addAll(listaChaveInscrito);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");  
         String horaInicio = campoHoraInicioSessao.getText();  
         String horaFim = campoHoraFimSessao.getText();
@@ -776,39 +844,88 @@ boolean habilitado = false;
         } catch (ParseException ex) {
             Logger.getLogger(InformacaoEvento.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(listaMinistranteFinal.isEmpty() == true) {
+            listaMinistranteFinal.addAll(listaMinistrante);
+        }
+        if(listaInscritoFinal.isEmpty() == true) {
+            listaInscritoFinal.addAll(listaInscrito);
+        }
         
         if (BoxTipoSessao.getSelectedItem().equals(TipoSessao.PALESTRA)) {
-            sessaoService.alterarSessao(idSelecionado, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.PALESTRA, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, listaMinistrante);    
+            sessaoService.alterarSessao(idSelecionadoSessao, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.PALESTRA, 
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e,listaMinistranteFinal, listaInscritoFinal );    
         } else if(BoxTipoSessao.getSelectedItem().equals(TipoSessao.MINICURSO)) {
-            sessaoService.alterarSessao(id, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.MINICURSO, 
-            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e, null, listaMinistrante);    
+            sessaoService.alterarSessao(idSelecionadoSessao, campoNomeSessao.getText(),campoLocalSessao.getText(), TipoSessao.MINICURSO, 
+            horaInicioSessao, horaFimSessao,campoDataSessao.getDate(), numeroMaxInscritos, e,listaMinistranteFinal, listaInscritoFinal);    
         }        
         AtualizarTabelaSessao();
         LimparCamposSessao();
         BotaoCadastrarSessao.setEnabled(true);
-        idSelecionado = 0;
+        idSelecionadoSessao = 0;
     }//GEN-LAST:event_botaoAlterarSessaoActionPerformed
-    ArrayList<Inscrito> listaInscrito = new ArrayList<>();
+
+    //----------------------------------------Ministrantes-----------------------------------------
+    
     private void botaoAdicionarMinistranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarMinistranteActionPerformed
+        boolean ministrantesLista = false;
+        listaChaveMinistrante.removeAll(listaChaveMinistrante);//Limpa a lista Chave.
        
-       cont = 0;
-       while(listaMinistrante.size() > cont) {
-            if(boxMinistrante.getSelectedItem().equals(listaMinistrante.get(cont).getNome())) {
-                listaInscrito = inscritoService.listarInscrito();
+        if(idSelecionadoSessao > 0) {
+            listaMinistrante.removeAll(listaMinistrante);// Limpa a listaMinistrante.     
+            listaChaveMinistrante.addAll(ministranteService.listarMinistrantePorSessao(idSelecionadoSessao));//Recebe os Ministrantes já cadastrados na sessão.            
+            listaMinistranteFinal.addAll(listaChaveMinistrante);//Adiciona os Ministrantes na listaTabela;
+            listaMinistrante.addAll(ministranteService.listarMinistrante());//Recebe todos os Ministrantes Cadastrados.
+            listaMinistrante.removeAll(listaChaveMinistrante);//Remove todos os ministrantes ja cadastrados dessa sessão.
+            listaMinistrante.removeAll(listaAuxiliarMinistrante);//Remove os novos ministrantes a serem cadastrados.
+            
+            if(listaMinistranteFinal.size() > 0) {
+                ministrantesLista = true;
+                cont =0;
+                while(listaMinistrante.size() > cont) {
+                    if(boxMinistrante.getSelectedItem().equals(listaMinistrante.get(cont).getNome())) {
+                        listaMinistranteFinal.add(listaMinistrante.get(cont));//Adiciona na listaTabela o novo ministrante a ser cadastrado.
+                    }
+            
                 cont++;
-                
+                }    
+            } else {
+                ministrantesLista = false;
+            }
+       } 
+        if (ministrantesLista == false){ 
+            cont = 0;
+            listaMinistrante = ministranteService.listarMinistrante();
+            listaMinistrante.removeAll(listaAuxiliarMinistrante);
+            while(listaMinistrante.size() > cont) {
+                if(boxMinistrante.getSelectedItem().equals(listaMinistrante.get(cont).getNome())) {
+                    listaMinistranteFinal.add(listaMinistrante.get(cont));
+                    listaMinistrante.remove(cont);
+                    
             }
             
             cont++;
        }
+        }
+       cont = 0;
        
+        while (listaMinistranteFinal.size() > cont) {
+            DefaultTableModel model = (DefaultTableModel) tabelaMinistrante.getModel();  
+            model.setRowCount(cont);
+            Object[] linha = new Object[]{listaMinistranteFinal.get(cont).getId(), listaMinistranteFinal.get(cont).getNome(), listaMinistranteFinal.get(cont).getEmail(), listaMinistranteFinal.get(cont).getTelefone()};
+            model.addRow(linha);
+            
+            cont++;
+       }
+        listaAuxiliarMinistrante.removeAll(listaAuxiliarMinistrante);
+        listaAuxiliarMinistrante.addAll(listaMinistranteFinal);//Recebe todos os ministrantes que estao na Tabela.
+        listaMinistranteFinal.removeAll(listaChaveMinistrante);//Remove da lista os Ministrantes que já foram cadastrado na sessão.
+        
     }//GEN-LAST:event_botaoAdicionarMinistranteActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-    int idSelecionadoMinistrante = 0;
+
     private void tabelaMinistranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMinistranteMouseClicked
         Ministrante ministrante = new Ministrante();
         idSelecionadoMinistrante = 
@@ -817,17 +934,161 @@ boolean habilitado = false;
         curriculo = ministrante.getCurriculo();
     }//GEN-LAST:event_tabelaMinistranteMouseClicked
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        
-    }//GEN-LAST:event_jButton10ActionPerformed
-    String curriculo = null;
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoremoverMinistrantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoremoverMinistrantesActionPerformed
+            listaMinistrante = ministranteService.listarMinistrantePorSessao(idSelecionadoSessao);
+            cont = 0;    
+            while (listaMinistrante.size() >  cont) {
+                if(listaMinistrante.get(cont).getId() == idSelecionadoMinistrante) {
+                    ministranteService.apagarMinistrantePorSessao(idSelecionadoMinistrante);
+                    listaChaveMinistrante.remove(listaMinistrante.get(cont));        
+                    listaMinistrante.remove(cont);
+                }        
+                cont++;
+            }        
+            ((DefaultTableModel) tabelaMinistrante.getModel()).removeRow(tabelaMinistrante.getSelectedRow());   
+            cont = 0;
+            while(listaMinistranteFinal.size() > cont) {
+                if(listaMinistranteFinal.get(cont).getId() == idSelecionadoMinistrante) {
+                    listaAuxiliarMinistrante.remove(cont);
+                    listaMinistranteFinal.remove(listaMinistranteFinal.get(cont));
+                }
+            cont++;
+            }
+             
+    }//GEN-LAST:event_botaoremoverMinistrantesActionPerformed
+    
+    private void botaoCurriculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCurriculoActionPerformed
         CurriculoMinistrante cm = new CurriculoMinistrante(this, true, curriculo);
         cm.setModal(true);
         cm.setVisible(true);
+    }//GEN-LAST:event_botaoCurriculoActionPerformed
+
+//-----------------------------------------Inscrito-----------------------------------
+      
+    private void botaoRemoverInscritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverInscritoActionPerformed
+         listaInscrito = inscritoService.listarInscritoPorSessao(idSelecionadoSessao);
+            cont = 0;    
+            while (listaInscrito.size() >  cont) {
+                if(listaInscrito.get(cont).getId() == idSelecionadoInscrito) {
+                    inscritoService.apagarInscritoPorSessao(idSelecionadoInscrito);
+                    listaChaveInscrito.remove(listaInscrito.get(cont));
+                    listaInscrito.remove(cont);
+                }        
+                cont++;
+            }        
+            ((DefaultTableModel) tabelaInscrito.getModel()).removeRow(tabelaInscrito.getSelectedRow());   
+            cont = 0;
+            while(listaInscritoFinal.size() > cont) {
+                if(listaInscritoFinal.get(cont).getId() == idSelecionadoInscrito) {
+                    listaAuxiliarInscrito.remove(cont);
+                    listaInscritoFinal.remove(listaInscritoFinal.get(cont));
+                }
+            cont++;
+            }
+    }//GEN-LAST:event_botaoRemoverInscritoActionPerformed
+
+    private void tabelaInscritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaInscritoMouseClicked
+        Inscrito inscrito = new Inscrito();
+        idSelecionadoInscrito = 
+        (int)tabelaInscrito.getValueAt(tabelaInscrito.getSelectedRow(),0);
+        inscrito = inscritoService.retornarInscrito(idSelecionadoInscrito);
+    }//GEN-LAST:event_tabelaInscritoMouseClicked
+
+    private void boxInscritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxInscritoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxInscritoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+boolean inscritoLista = false;
+        listaChaveInscrito.removeAll(listaChaveInscrito);//Limpa a lista Chave.
+       
+        if(idSelecionadoSessao > 0) {
+            listaInscrito.removeAll(listaInscrito);// Limpa a listaMinistrante.     
+            listaChaveInscrito.addAll(inscritoService.listarInscritoPorSessao(idSelecionadoSessao));//Recebe os Ministrantes já cadastrados na sessão.            
+            listaInscritoFinal.addAll(listaChaveInscrito);//Adiciona os Ministrantes na listaTabela;
+            listaInscrito.addAll(inscritoService.listarInscrito());//Recebe todos os Ministrantes Cadastrados.
+            listaInscrito.removeAll(listaChaveInscrito);//Remove todos os ministrantes ja cadastrados dessa sessão.
+            listaInscrito.removeAll(listaAuxiliarInscrito);//Remove os novos ministrantes a serem cadastrados.
+            
+            if(listaInscritoFinal.size() > 0) {
+                inscritoLista = true;
+                cont =0;
+                while(listaInscrito.size() > cont) {
+                    if(boxInscrito.getSelectedItem().equals(listaInscrito.get(cont).getNome())) {
+                        listaInscritoFinal.add(listaInscrito.get(cont));//Adiciona na listaTabela o novo ministrante a ser cadastrado.
+                    }
+            
+                cont++;
+                }    
+            } else {
+                inscritoLista = false;
+            }
+       } 
+        if (inscritoLista == false){ 
+            cont = 0;
+            listaInscrito = inscritoService.listarInscrito();
+            listaInscrito.removeAll(listaAuxiliarInscrito);
+            while(listaInscrito.size() > cont) {
+                if(boxInscrito.getSelectedItem().equals(listaInscrito.get(cont).getNome())) {
+                    listaInscritoFinal.add(listaInscrito.get(cont));
+                    listaInscrito.remove(cont);
+                    
+            }
+            
+            cont++;
+       }
+        }
+       cont = 0;
+       
+        while (listaInscritoFinal.size() > cont) {
+            DefaultTableModel model = (DefaultTableModel) tabelaInscrito.getModel();  
+            model.setRowCount(cont);
+            Object[] linha = new Object[]{listaInscritoFinal.get(cont).getId(), listaInscritoFinal.get(cont).getNome(),listaInscritoFinal.get(cont).getCpf(), listaInscritoFinal.get(cont).getEmail(), listaInscritoFinal.get(cont).getInstituicao()};
+            model.addRow(linha);
+            
+            cont++;
+       }
+        listaAuxiliarInscrito.removeAll(listaAuxiliarInscrito);
+        listaAuxiliarInscrito.addAll(listaInscritoFinal);//Recebe todos os ministrantes que estao na Tabela.
+        listaInscritoFinal.removeAll(listaChaveInscrito);//Remove da lista os Ministrantes que já foram cadastrado na sessão.
+                
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void campoDataInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_campoDataInicioPropertyChange
+        campoDataFim.setMinSelectableDate(campoDataInicio.getDate());
+    }//GEN-LAST:event_campoDataInicioPropertyChange
     
-    //----------------------------------------Métodos------------------------------------
+
+//---------------------------------------Declaração das Váriaveis e Listas-------------------------------------
+    String curriculo = null;    
+    int idSelecionadoMinistrante = 0;    
+    int idSelecionadoSessao = 0;
+    int idSelecionadoInscrito = 0;
+    boolean habilitado = false;
+    int cont = 0;
+    int id = 0;
+    ArrayList<Ministrante> listaMinistranteFinal = new ArrayList<Ministrante>();
+    ArrayList<Ministrante> listaAuxiliarMinistrante = new ArrayList<Ministrante>();
+    ArrayList<Ministrante> listaChaveMinistrante = new ArrayList<Ministrante>();    
+    ArrayList<Ministrante> listaMinistrante = new ArrayList<Ministrante>();
+    ArrayList<Inscrito> listaInscrito = new ArrayList<Inscrito>();
+    ArrayList<Inscrito> listaInscritoFinal = new ArrayList<Inscrito>();
+    ArrayList<Inscrito> listaChaveInscrito = new ArrayList<Inscrito>();
+    ArrayList<Inscrito> listaAuxiliarInscrito = new ArrayList<Inscrito>();
+    Evento e = new Evento();
+    //----------------------------------------Métodos--------------------------------------------------------------
+    
+      private void preencherEvento(Evento evento){
+        e = evento;
+        id = evento.getId();
+        campoNome.setText(evento.getNome());
+        campoLocal.setText(evento.getLocal());
+        campoDataInicio.setDate(evento.getDataInicio());
+        campoDataFim.setDate(evento.getDataFim());
+        campoConteudoEmail.setText(evento.getConteudoEmail());
+        campoDataSessao.setMinSelectableDate(e.getDataInicio());
+        campoDataSessao.setMaxSelectableDate(e.getDataFim());
+    }
     
     private void DesabilitarCamposEvento(){
         campoNome.setEditable(false);
@@ -863,20 +1124,30 @@ boolean habilitado = false;
         } 
         
     }
-    private void AtualizarTabelaMinistrante() {
-        
-        listaMinistrante = ministranteService.listarMinistrantePorSessao(idSelecionado);
+    private void AtualizarTabelaMinistrante() {    
+        listaMinistrante = ministranteService.listarMinistrantePorSessao(idSelecionadoSessao);
         DefaultTableModel model = (DefaultTableModel) tabelaMinistrante.getModel();  
         model.setRowCount(0);
-       
+        cont = 0;
         for (Ministrante m : listaMinistrante) {   
             Object[] linha = new Object[]{m.getId(), m.getNome(), m.getEmail(), m.getTelefone()};
             model.addRow(linha);
-            
-        } 
-        
+                        
+        }
     }
     
+    private void AtualizarTabelaInscrito() {       
+        listaInscrito = inscritoService.listarInscritoPorSessao(idSelecionadoSessao);
+        DefaultTableModel model = (DefaultTableModel) tabelaInscrito.getModel();  
+        model.setRowCount(0);
+        cont = 0;
+        for (Inscrito i : listaInscrito) {   
+            Object[] linha = new Object[]{i.getId(), i.getNome(), i.getCpf(),i.getEmail(), i.getInstituicao()};
+            model.addRow(linha);
+                        
+        }
+    }
+      
     private void LimparCamposSessao() {
         campoNomeSessao.setText("");
         campoLocalSessao.setText("");
@@ -885,8 +1156,18 @@ boolean habilitado = false;
         campoNumeroInscritos.setText("");
         campoDataSessao.setDate(null);
         BoxTipoSessao.setSelectedIndex(0);
-        idSelecionado = 0;
-        
+        idSelecionadoSessao = 0;
+        curriculo = "";
+        DefaultTableModel modelMinistrante = (DefaultTableModel) tabelaMinistrante.getModel();  
+        modelMinistrante.setRowCount(0);
+        DefaultTableModel modelInscrito = (DefaultTableModel) tabelaInscrito.getModel();  
+        modelInscrito.setRowCount(0);
+        listaMinistranteFinal.removeAll(listaMinistranteFinal);
+        listaInscritoFinal.removeAll(listaInscritoFinal);
+        boxMinistrante.setSelectedIndex(0);
+        boxInscrito.setSelectedIndex(0);
+        listaAuxiliarMinistrante.removeAll(listaAuxiliarMinistrante);
+        listaAuxiliarInscrito.removeAll(listaAuxiliarInscrito);
     }
     /**
      * @param args the command line arguments
@@ -930,27 +1211,31 @@ boolean habilitado = false;
     private javax.swing.JButton botaoAdicionarMinistrante;
     private javax.swing.JButton botaoAlterarEvento;
     private javax.swing.JButton botaoAlterarSessao;
+    private javax.swing.JButton botaoApagarEvento;
     private javax.swing.JButton botaoApagarSessao;
+    private javax.swing.JButton botaoCurriculo;
     private javax.swing.JButton botaoLimparCampos;
+    private javax.swing.JButton botaoRemoverInscrito;
     private javax.swing.JButton botaoVoltar;
+    private javax.swing.JButton botaoremoverMinistrantes;
+    private javax.swing.JComboBox boxInscrito;
     private javax.swing.JComboBox boxMinistrante;
     private javax.swing.JTextArea campoConteudoEmail;
     private com.toedter.calendar.JDateChooser campoDataFim;
     private com.toedter.calendar.JDateChooser campoDataInicio;
     private com.toedter.calendar.JDateChooser campoDataSessao;
     private javax.swing.JTextField campoHoraFimSessao;
-    private javax.swing.JTextField campoHoraInicioSessao;
+    private javax.swing.JFormattedTextField campoHoraInicioSessao;
     private javax.swing.JTextField campoLocal;
     private javax.swing.JTextField campoLocalSessao;
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoNomeSessao;
     private javax.swing.JTextField campoNumeroInscritos;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel19;
@@ -971,7 +1256,7 @@ boolean habilitado = false;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable tabelaInscrito;
     private javax.swing.JTable tabelaMinistrante;
     private javax.swing.JTable tabelaSessao;
     private javax.swing.JLabel txtConteudoEmail;

@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import model.Inscrito;
+import model.Ministrante;
+import model.Sessao;
 import util.EntityManagerUtil;
 
 /**
@@ -98,4 +100,40 @@ return lista;
 		return retorno;
 		
 	}
+        
+        public ArrayList<Inscrito> listarInscritosPorSessao(int id){
+	
+    ArrayList<Inscrito> lista = new ArrayList<Inscrito>();   
+    Query query = entityManager.createNativeQuery("select si.idInscrito , si.Idsessao, i.nomeInscrito, i.cpfInscrito, i.emailInscrito, \n" +
+                                                  "i.dataNascimentoInscrito, i.instituicaoInscrito, i.naturalidadeInscrito from\n" +
+                                                  "inscrito as i inner join sessao_inscrito as si on si.idSessao = " + id + " \n" +
+                                                  "where si.idInscrito = i.idInscrito;", Inscrito.class);
+                
+    lista = (ArrayList<Inscrito>)    query.getResultList();
+		
+return lista;  
+	}
+        
+        
+        public String apagarInscritoSessao(int id){
+         		String retorno = "Inscrito apagado com sucesso";
+		EntityTransaction tx = getEntityManager().getTransaction();
+		 
+        try {
+            tx.begin();
+            Query query = entityManager.createNativeQuery("delete si from sessao_inscrito as si inner join inscrito i \n" +
+                                                                    "on si.idInscrito = i.idInscrito \n" +
+                                                                    "where si.idInscrito = " + id, Sessao.class);
+            query.executeUpdate();
+            tx.commit();
+        } catch (Throwable t) {
+            t.printStackTrace();
+            tx.rollback();
+        } finally {
+           
+        }
+            
+            return retorno;
+        }
 }
+

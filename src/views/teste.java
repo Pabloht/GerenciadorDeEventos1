@@ -7,12 +7,19 @@ package views;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import model.Evento;
 import model.Inscrito;
@@ -35,6 +42,8 @@ public class teste extends javax.swing.JFrame {
      */
     public teste() {
         initComponents();
+        jDateChooser1.setMinSelectableDate(Date.from(Instant.now()));
+        
     }
 
     /**
@@ -65,6 +74,9 @@ public class teste extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jSpinField1 = new com.toedter.components.JSpinField();
+        jSpinField2 = new com.toedter.components.JSpinField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,6 +88,11 @@ public class teste extends javax.swing.JFrame {
         });
 
         jButton5.setText("Limpar Campos");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +124,11 @@ public class teste extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         jButton6.setText("Alterar Sessão");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Apagar Sessão");
 
@@ -135,6 +157,12 @@ public class teste extends javax.swing.JFrame {
             }
         });
 
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,12 +172,20 @@ public class teste extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(186, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jSpinField2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(jSpinField1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -197,10 +233,17 @@ public class teste extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(317, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSpinField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(73, 73, 73))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,8 +298,7 @@ public class teste extends javax.swing.JFrame {
         String horaInicio = "12:00";  
         String horaFim = "15:00";
         
-        Date horaInicioSessao = null;  
-        Date horaFimSessao = null;
+        
         
         try {
             horaInicioSessao = sdf.parse(horaInicio);
@@ -264,9 +306,9 @@ public class teste extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(InformacaoEvento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        listaInscrito = inscritoService.listarInscrito();
-        listaMinistrante = ministranteService.listarMinistrante();
-        sessaoService.incluirMinistrante("joao", "500", TipoSessao.PALESTRA, horaInicioSessao, horaFimSessao, jDateChooser1.getDate(), 10, e, listaMinistrante, listaInscrito);
+      //  listaInscrito = inscritoService.listarInscrito();
+       // listaMinistrante = ministranteService.listarMinistrante();
+        //sessaoService.incluirMinistrante("Maria", "1000", TipoSessao.PALESTRA, horaInicioSessao, horaFimSessao, jDateChooser1.getDate(), 10, e, listaMinistrante, listaInscrito);
         
     }//GEN-LAST:event_jButton4ActionPerformed
     private MaskFormatter setMascara(String mascara){  
@@ -276,9 +318,27 @@ public class teste extends javax.swing.JFrame {
         }catch(java.text.ParseException ex){}  
     return mask;  
 }  
+    Date horaInicioSessao = null;  
+        Date horaFimSessao = null;
     private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
 
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        ArrayList<Ministrante> listaMinistrante = new ArrayList<Ministrante>();
+        ArrayList<Inscrito> listaInscrito = new ArrayList<Inscrito>();
+        //listaInscrito = inscritoService.listarInscrito();
+        listaMinistrante = ministranteService.listarMinistrante();
+        listaMinistrante.remove(2);
+        Evento e = new Evento();
+        e = eventoService.retornarEvento(1);
+        sessaoService.alterarSessao(12,"Mudança", "10", TipoSessao.MINICURSO, horaInicioSessao, horaFimSessao, jDateChooser1.getDate(), 25, e, listaMinistrante, null);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Date data = new Date();  
+        System.out.println(data);  
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,6 +366,23 @@ public class teste extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(teste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        Calendar calendar = new GregorianCalendar();
+    calendar.set(Calendar.HOUR_OF_DAY, 13); // 1pm
+
+        SpinnerDateModel dateModel = new SpinnerDateModel(calendar.getTime(), null,
+        null, Calendar.HOUR_OF_DAY);
+        JSpinner spinner = new JSpinner(dateModel);
+
+    JFormattedTextField tf = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
+        DefaultFormatterFactory factory = (DefaultFormatterFactory) tf.getFormatterFactory();
+        DateFormatter formatter = (DateFormatter) factory.getDefaultFormatter();
+
+    // Change the date format to only show the hours
+    formatter.setFormat(new SimpleDateFormat("hh:00 a"));
+        
+//formatter.setFormat(new SimpleDateFormat("HH:00 a"));
+  
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -322,6 +399,7 @@ public class teste extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -329,6 +407,8 @@ public class teste extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
+    private com.toedter.components.JSpinField jSpinField1;
+    private com.toedter.components.JSpinField jSpinField2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

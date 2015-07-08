@@ -48,6 +48,7 @@ public class SessaoDAO {
             tx.begin();
             getEntityManager().merge(s);
             tx.commit();
+            
         } catch (Throwable t) {
             t.printStackTrace();
             tx.rollback();

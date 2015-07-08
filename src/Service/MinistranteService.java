@@ -81,4 +81,14 @@ public ArrayList<Ministrante> listarMinistrantePorSessao(int id) {
         }
         return ministrantes;
     }
+    
+    public void apagarMinistrantePorSessao(int id) {
+        try {
+            ministranteDAO.apagarMinistranteSessao(id);
+            JOptionPane.showMessageDialog(null, "Ministrante apagado da Sessão com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao apagar o ministrante... " + e);
+        }
+    }
 }

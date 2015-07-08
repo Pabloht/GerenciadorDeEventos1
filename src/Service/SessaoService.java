@@ -53,9 +53,9 @@ public class SessaoService {
         return retorno;
     }
     
-    public boolean alterarSessao(int id, String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento, List<Inscrito> inscrito, List<Ministrante> ministrante) {
+    public boolean alterarSessao(int id, String nome, String local, TipoSessao tipoSessao, Date horaInicio,Date horaFim, Date data,int numeroMaximo, Evento evento, List<Ministrante> ministrantes, List<Inscrito> inscritos) {
         boolean retorno = false;
-        Sessao sessao = new Sessao(id, data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao, inscrito, ministrante);
+        Sessao sessao = new Sessao(id, data, horaFim, horaInicio, local, nome, numeroMaximo, evento, tipoSessao, inscritos, ministrantes);
         try {
             sessaoDAO.alterarSessao(sessao);
             retorno = true;

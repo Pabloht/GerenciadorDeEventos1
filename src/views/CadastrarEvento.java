@@ -5,6 +5,8 @@
  */
 package views;
 
+import java.time.Instant;
+import java.util.Date;
 import service.EventoService;
 
 /**
@@ -18,7 +20,9 @@ public class CadastrarEvento extends javax.swing.JFrame {
      * Creates new form CadastrarEvento
      */
     public CadastrarEvento() {
-        initComponents();
+        initComponents();  
+        jDateChooser1.setMinSelectableDate(Date.from(Instant.now()));
+       
     }
 
     /**
@@ -76,6 +80,12 @@ public class CadastrarEvento extends javax.swing.JFrame {
         botaoLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLimparActionPerformed(evt);
+            }
+        });
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
             }
         });
 
@@ -177,6 +187,10 @@ public class CadastrarEvento extends javax.swing.JFrame {
         telaEventos.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        jDateChooser2.setMinSelectableDate(jDateChooser1.getDate());
+    }//GEN-LAST:event_jDateChooser1PropertyChange
     public void LimparCampos() {
         campoNome.setText("");
         campoLocal.setText("");

@@ -59,6 +59,7 @@ public class Sessao {
     @JoinTable(name="sessao_ministrante", 
       joinColumns=@JoinColumn(name="idsessao"),
       inverseJoinColumns=@JoinColumn(name="idministrante"))
+    @Column(name = "inscritoSessao")
        private List<Ministrante> ministrantes;
     
     @ManyToOne
@@ -74,8 +75,8 @@ public class Sessao {
 
     @ManyToMany 
     @JoinTable(name="sessao_inscrito", 
-    joinColumns=@JoinColumn(name="idInscrito"),
-    inverseJoinColumns=@JoinColumn(name="idSessao"))
+    joinColumns=@JoinColumn(name="idSessao"),
+    inverseJoinColumns=@JoinColumn(name="idInscrito"))
     @Column(name = "inscritoSessao")
     private List<Inscrito> inscritos;
 
@@ -113,6 +114,8 @@ public class Sessao {
         this.numeroMaximo = numeroMaximo;
         this.evento = evento;
         this.tipoSessao = tipoSessao;
+        this.inscritos = inscrito;
+        this.ministrantes = ministrante;
     }
     /**
      * @return the data
