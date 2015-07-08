@@ -7,6 +7,8 @@ package views;
 
 import java.time.Instant;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Evento;
 import service.EventoService;
 
 /**
@@ -173,9 +175,20 @@ public class CadastrarEvento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+       try {
+        boolean resultado = true;
+        resultado = verificarCampos();
+        if (resultado == true) {
         
-        eventoService.incluirEvento(campoNome.getText(), campoLocal.getText(), jDateChooser1.getDate(), jDateChooser2.getDate(), campoConteudoEmail.getText());
+        eventoService.incluirEvento(campoNome.getText(), campoLocal.getText(), jDateChooser1.getDate(), 
+                                    jDateChooser2.getDate(), campoConteudoEmail.getText());
         LimparCampos();
+    }
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos corretamente!");
+       }
+        
+        
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
@@ -198,6 +211,17 @@ public class CadastrarEvento extends javax.swing.JFrame {
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
     }
+    public boolean verificarCampos() {
+        boolean resultado = true;
+        if(campoNome.getText().equals("") || campoLocal.getText().equals("") || campoConteudoEmail.getText().equals("")
+                || jDateChooser1.getDate().equals(null) || jDateChooser2.getDate().equals(null) ) {
+            
+            resultado = false;
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos corretamente");
+        }
+        return resultado;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -224,7 +248,9 @@ public class CadastrarEvento extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CadastrarEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

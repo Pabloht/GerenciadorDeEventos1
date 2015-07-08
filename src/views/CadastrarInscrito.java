@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Inscrito;
 
@@ -63,6 +64,7 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         botaoAlterar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
         campoCpfInscrito = new javax.swing.JFormattedTextField();
+        botaoImportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +74,11 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         campoNomeInscrito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoNomeInscritoActionPerformed(evt);
+            }
+        });
+        campoNomeInscrito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNomeInscritoKeyTyped(evt);
             }
         });
 
@@ -147,6 +154,13 @@ public class CadastrarInscrito extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        botaoImportar.setText("Importar");
+        botaoImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoImportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -157,6 +171,8 @@ public class CadastrarInscrito extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(campoVoltarInscrito)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoImportar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoApagar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,7 +237,7 @@ public class CadastrarInscrito extends javax.swing.JFrame {
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDataNascimentoInscrito)
                             .addComponent(campoDataNascimentoInscrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoCadastrar)
                             .addComponent(botaoLimparCampos)))
@@ -231,7 +247,8 @@ public class CadastrarInscrito extends javax.swing.JFrame {
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(campoVoltarInscrito)
                             .addComponent(botaoAlterar)
-                            .addComponent(botaoApagar))))
+                            .addComponent(botaoApagar)
+                            .addComponent(botaoImportar))))
                 .addContainerGap())
         );
 
@@ -260,11 +277,18 @@ public class CadastrarInscrito extends javax.swing.JFrame {
     }//GEN-LAST:event_campoNomeInscritoActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-     
+        try {     
+        boolean resultado = true;
+        resultado = verificarCampos();
+        if(resultado == true) {
         inscritoService.incluirInscrito(campoNomeInscrito.getText(), campoCpfInscrito.getText(),campoInstituicaoInscrito.getText() , 
                 campoNaturalidadeInscrito.getText(), campoDataNascimentoInscrito.getDate(), campoEmailInscrito.getText());
         LimparCampos();
         AtualizarTabela();
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos Corretamente!");
+        }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
     int idSelecionado = 0;
     private void botaoApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarActionPerformed
@@ -295,6 +319,18 @@ public class CadastrarInscrito extends javax.swing.JFrame {
         botaoApagar.setEnabled(true);
         botaoAlterar.setEnabled(true);
     }//GEN-LAST:event_tabelaInscritoMouseClicked
+
+    private void campoNomeInscritoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeInscritoKeyTyped
+       String caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        if(!caracteres.contains(evt.getKeyChar()+"")){
+        evt.consume();
+        }
+        
+    }//GEN-LAST:event_campoNomeInscritoKeyTyped
+
+    private void botaoImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImportarActionPerformed
+        new ImportarInscritosExcel().setVisible(true);
+    }//GEN-LAST:event_botaoImportarActionPerformed
 private void AtualizarTabela() {
       List <Inscrito> listaInscrito = new ArrayList();   
         listaInscrito = inscritoService.listarInscrito() ;
@@ -307,6 +343,18 @@ private void AtualizarTabela() {
             
         } 
 }
+     
+public boolean verificarCampos() {
+        boolean resultado = true;
+        if(campoNomeInscrito.getText().equals("") || campoCpfInscrito.getText().equals("") || campoEmailInscrito.getText().equals("")
+                || campoInstituicaoInscrito.getText().equals("") || campoNaturalidadeInscrito.getText().equals("")
+                || campoDataNascimentoInscrito.getDate().equals(null)) {
+            
+            resultado = false;
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos corretamente");
+        }
+        return resultado;
+    }
        
  private void LimparCampos() {
         campoNomeInscrito.setText("");
@@ -359,6 +407,7 @@ private void AtualizarTabela() {
     private javax.swing.JButton botaoAlterar;
     private javax.swing.JButton botaoApagar;
     private javax.swing.JButton botaoCadastrar;
+    private javax.swing.JButton botaoImportar;
     private javax.swing.JButton botaoLimparCampos;
     private javax.swing.JFormattedTextField campoCpfInscrito;
     private com.toedter.calendar.JDateChooser campoDataNascimentoInscrito;

@@ -5,6 +5,7 @@
  */
 package views;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -24,6 +25,7 @@ import javax.swing.text.MaskFormatter;
 import model.Evento;
 import model.Inscrito;
 import model.Ministrante;
+import model.Sessao;
 import model.TipoSessao;
 import model.Usuario;
 import service.EventoService;
@@ -131,6 +133,11 @@ public class teste extends javax.swing.JFrame {
         });
 
         jButton7.setText("Apagar Sessão");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +158,12 @@ public class teste extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         jLabel1.setText("Informações das Sessões");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField1ActionPerformed(evt);
@@ -158,10 +171,15 @@ public class teste extends javax.swing.JFrame {
         });
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextField2KeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,6 +357,40 @@ public class teste extends javax.swing.JFrame {
         Date data = new Date();  
         System.out.println(data);  
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jFormattedTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField2KeyTyped
+        
+       
+    }//GEN-LAST:event_jFormattedTextField2KeyTyped
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // CPF - resultado 012.345.699-01
+   String c = "";
+        try {
+        
+        c = format("###.###.###-##", jTextField6.getText());
+        System.out.println(c);
+        } catch (Exception e) {
+            System.out.println(c);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        String caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        if(!caracteres.contains(evt.getKeyChar()+"")){
+        evt.consume();
+}
+    }//GEN-LAST:event_jTextField1KeyTyped
+ private static String format(String pattern, Object value) {
+        MaskFormatter mask;
+        try {
+            mask = new MaskFormatter(pattern);
+            mask.setValueContainsLiteralCharacters(false);
+            return mask.valueToString(value);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * @param args the command line arguments

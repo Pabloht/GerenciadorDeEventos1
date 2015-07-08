@@ -48,6 +48,8 @@
                       <Component id="jScrollPane1" min="-2" pref="452" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="campoVoltarInscrito" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="botaoImportar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="botaoApagar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -129,7 +131,7 @@
                               <Component id="txtDataNascimentoInscrito" min="-2" max="-2" attributes="0"/>
                               <Component id="campoDataNascimentoInscrito" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="65" max="32767" attributes="0"/>
+                          <EmptySpace pref="69" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="botaoCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoLimparCampos" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -142,6 +144,7 @@
                               <Component id="campoVoltarInscrito" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoApagar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoImportar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -154,6 +157,7 @@
         <Component class="javax.swing.JTextField" name="campoNomeInscrito">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoNomeInscritoActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNomeInscritoKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campoEmailInscrito">
@@ -265,6 +269,14 @@
               <Format format="###.###.###-##" subtype="-1" type="5"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="botaoImportar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Importar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoImportarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

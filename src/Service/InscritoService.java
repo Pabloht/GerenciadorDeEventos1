@@ -99,4 +99,13 @@ public class InscritoService {
                     "Erro ao apagar o inscrito... " + e);
         }
     }
+    public void incluirInscritoImportadoExcel(String nome, String cpf, String instituicao, String naturalidade, Date dataNascimento, String email) {
+        Inscrito inscrito = new Inscrito( nome, cpf, instituicao, naturalidade,dataNascimento, email);
+        try {
+            inscritoDAO.incluirInscrito(inscrito);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro na inclusão do inscrito... " + e);
+        }
+    }
 }

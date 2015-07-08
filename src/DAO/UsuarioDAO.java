@@ -98,4 +98,14 @@ return lista;
 		return retorno;
 		
 	}
+        public Usuario validarUsuarioSenha(String login, String senha) {
+
+        Query query = entityManager.createQuery("select u from Usuario u where u.nome = :login AND u.senha = :senha");
+        query.setParameter("login", login);
+        query.setParameter("senha", senha);
+
+        Usuario usuario = (Usuario) query.getSingleResult();
+
+        return usuario;
+    }
 }

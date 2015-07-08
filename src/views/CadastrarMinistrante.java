@@ -7,6 +7,7 @@ package views;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Inscrito;
 import model.Ministrante;
@@ -63,6 +64,12 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         botaoCadastrarCurriculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrarCurriculoActionPerformed(evt);
+            }
+        });
+
+        campoNomeMinistrante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNomeMinistranteKeyTyped(evt);
             }
         });
 
@@ -219,7 +226,7 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
                             .addComponent(botaoLimparCampos)))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoVoltarMinistrante)
                             .addComponent(botaoAlterar)
@@ -249,7 +256,7 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         telaEventos.setVisible(true);
         dispose();
     }//GEN-LAST:event_BotaoVoltarMinistranteActionPerformed
-    String curriculo = null;
+    String curriculo = "";
     private void botaoCadastrarCurriculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarCurriculoActionPerformed
         CurriculoMinistrante cm = new CurriculoMinistrante(this, true, curriculo);
         cm.setModal(true);
@@ -258,10 +265,17 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrarCurriculoActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        ministranteService.incluirMinistrante(campoNomeMinistrante.getText(), CampoTelefoneMinistrante.getText(), 
+        try {
+        boolean resultado = verificarCampos();
+        if(resultado == true){
+            ministranteService.incluirMinistrante(campoNomeMinistrante.getText(), CampoTelefoneMinistrante.getText(), 
                                                                     campoEmailMinistrante.getText(), curriculo);
-        LimparCampos();
-        AtualizarTabela();
+            LimparCampos();
+            AtualizarTabela();
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Cadastre um Curriculo!");
+        }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
     int idSelecionado = 0;
     private void botaoApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarActionPerformed
@@ -291,6 +305,13 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         botaoAlterar.setEnabled(true);
         
     }//GEN-LAST:event_tabelaMinistranteMouseClicked
+
+    private void campoNomeMinistranteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeMinistranteKeyTyped
+        String caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        if(!caracteres.contains(evt.getKeyChar()+"")){
+        evt.consume();
+        }
+    }//GEN-LAST:event_campoNomeMinistranteKeyTyped
     private void LimparCampos(){
         campoNomeMinistrante.setText("");
         campoEmailMinistrante.setText("");
@@ -308,10 +329,24 @@ public class CadastrarMinistrante extends javax.swing.JFrame {
         model.setRowCount(0);
        
         for (Ministrante m : listaMinistrante) {   
-            Object[] linha = new Object[]{m.getId(), m.getNome(), m.getTelefone(), m.getTelefone()};
+            Object[] linha = new Object[]{m.getId(), m.getNome(), m.getTelefone(), m.getEmail()};
             model.addRow(linha);
             
         } 
+    }
+    
+    public boolean verificarCampos() {
+        boolean resultado = true;
+        if(campoNomeMinistrante.getText().equals("") || campoEmailMinistrante.getText().equals("") || CampoTelefoneMinistrante.getText().equals("(  )    -    ")) {
+            
+            resultado = false;
+            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos corretamente!");
+        }
+        if (curriculo.equals("")) {
+           resultado = false;
+            JOptionPane.showMessageDialog(rootPane, "Cadastre um Currículo!"); 
+        }
+        return resultado;
     }
     /**
      * @param args the command line arguments

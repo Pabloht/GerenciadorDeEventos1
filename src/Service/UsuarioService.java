@@ -73,4 +73,17 @@ public class UsuarioService {
         }
         return usuario;
     }
+    
+    
+    public Usuario validarUsuarioSenha(String login, String senha) {
+        Usuario usuario = null;
+
+        try {
+            usuario = usuarioDAO.validarUsuarioSenha(login, senha);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "erro no login:" + e);
+        }
+        return usuario;
+    }
 }
